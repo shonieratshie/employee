@@ -7,8 +7,13 @@ using System.Linq;
 using System.Web;
 
 
+
 public class BAL
 {
+    EMPLOYEE employee = new EMPLOYEE();
+    PERSON person = new PERSON();
+
+    #region PERSON
     //Employee
     private int _empId;
     private string _empNum;
@@ -62,8 +67,9 @@ public class BAL
         set { _birthDate = value; }
     }
 
-    
-	public BAL()
+    #endregion
+
+    public BAL()
 	{
 	}
 
@@ -96,18 +102,18 @@ public class BAL
     {
         using (SqlConnection sqlcon = new SqlConnection(conStr))
         {
-            SqlCommand cmd = new SqlCommand("spUpdateEmp", sqlcon);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@PersonId", PersonId);
-            cmd.Parameters.AddWithValue("@EmployeeNum", EmpNum);
-            cmd.Parameters.AddWithValue("@EmployedDate", EmployedDate);
-            cmd.Parameters.AddWithValue("@TerminatedDate", EmpTermDate);
-            cmd.Parameters.AddWithValue("@FirstName", FirstName);
-            cmd.Parameters.AddWithValue("@LastName", LastName);
-            cmd.Parameters.AddWithValue("@BirthDate", BirthDate);
+            SqlCommand sqlcmd = new SqlCommand("spUpdateEmp", sqlcon);
+            sqlcmd.CommandType = CommandType.StoredProcedure;
+            sqlcmd.Parameters.AddWithValue("@PersonId", PersonId);
+            sqlcmd.Parameters.AddWithValue("@EmployeeNum", EmpNum);
+            sqlcmd.Parameters.AddWithValue("@EmployedDate", EmployedDate);
+            sqlcmd.Parameters.AddWithValue("@TerminatedDate",EmpTermDate);
+            sqlcmd.Parameters.AddWithValue("@FirstName", FirstName);
+            sqlcmd.Parameters.AddWithValue("@LastName", LastName);
+            sqlcmd.Parameters.AddWithValue("@BirthDate", BirthDate);
 
             sqlcon.Open();
-            int count = cmd.ExecuteNonQuery();
+            int count = sqlcmd.ExecuteNonQuery();
             sqlcon.Close();
 
             if (count > 0)
